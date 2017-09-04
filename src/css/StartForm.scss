@@ -1,0 +1,90 @@
+.start-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    &__content {
+        width: 500px;
+        padding: 20px 50px 30px 50px;
+        background-color: #616161;
+        border: 1px solid #212121;
+    }
+    &__title {
+        text-align: center;
+    }
+    &__input-wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding-top: 25px;
+    }
+    &__input {
+        width: 100%;
+        height: 32px;
+        padding: 0 10px;
+        border: none;
+        outline: none;
+        border-radius: 2px;
+        background-color: #e0e0e0;
+        border: 1px solid #616161;
+        box-shadow: 0px 0px 0px 0px transparent;
+        transition: background-color 0.2s linear, border-color 0.2s linear, box-shadow 0.2s linear;
+        &:focus {
+            background-color: #fff;
+        }
+        &::-webkit-input-placeholder {
+            color: #616161;
+        }
+        &--error {
+            border-color: #c62828;
+            box-shadow: 0px 0px 2px 0px rgba(198, 40, 40, 1);
+        }
+    }
+    &__note {
+        padding: 12px 0;
+        font-size: 14px;
+        cursor: default;
+        &--bold {
+            font-weight: 600;
+        }
+    }
+    &__select-wrap {
+    }
+    &__select {
+        display: block;
+        background-color: #e0e0e0;
+        padding: 0 10px;
+        margin: 0;
+        line-height: 26px;
+        font-size: 16px;
+        margin: 0;
+        border: 1px solid #333;
+        color: #212121;
+        cursor: pointer;
+    }
+    &__btn-wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    &__submit-btn {
+        height: 34px;
+        padding: 8px 16px;
+        border-radius: 2px;
+        border: none;
+        outline: none;
+        background-color: #424242;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.1s ease, color 0.1s ease;
+        &:hover,
+        &:focus {
+            color: #eeeeee;
+            background-color: #4d4d4d;
+        }
+    }
+}

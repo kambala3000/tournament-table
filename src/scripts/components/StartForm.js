@@ -1,41 +1,57 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import classnames from 'classnames';
 
 import '../../css/StartForm.css';
+import * as uiActions from '../actions/UIActions';
+import * as settingsActions from '../actions/SettingsActions';
 
 class StartForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: '',
-            amount: '',
-            type: 'single',
+            settings: {
+                title: '',
+                amount: 0,
+                type: 'single'
+            },
             amountError: false
         };
     }
 
     titleInputHandler = e => {
-        this.setState({ title: e.target.value });
+        this.setState({ settings: { ...this.state.settings, title: e.target.value } });
     };
 
     numFieldHandler = e => {
         const value = e.target.value;
         if (value < 4 || value > 128 || value.search(/[^0-9]/g) > -1) {
-            this.setState({ amountError: true, amount: value });
+            this.setState({
+                amountError: true,
+                settings: { ...this.state.settings, amount: +value }
+            });
         } else {
-            this.setState({ amountError: false, amount: value });
+            this.setState({
+                amountError: false,
+                settings: { ...this.state.settings, amount: +value }
+            });
         }
     };
 
     selectHandler = e => {
-        this.setState({ type: e.target.value });
+        this.setState({ settings: { ...this.state.settings, type: e.target.value } });
     };
 
     generateGrid = e => {
         e.preventDefault();
         e.stopPropagation();
         if (!this.state.amountError) {
-            console.log(this.state);
+            const { saveSettings } = this.props.settingsActions;
+            const { triggerForm } = this.props.uiActions;
+            saveSettings(this.state.settings);
+            triggerForm();
         }
     };
 
@@ -92,4 +108,23 @@ class StartForm extends Component {
     }
 }
 
-export default StartForm;
+StartForm.propTypes = {
+    ui: PropTypes.object.isRequired,
+    uiActions: PropTypes.object.isRequired,
+    settingsActions: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+    return {
+        ui: state.ui
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        uiActions: bindActionCreators(uiActions, dispatch),
+        settingsActions: bindActionCreators(settingsActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StartForm);
